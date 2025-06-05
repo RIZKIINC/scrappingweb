@@ -2,250 +2,405 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Article Parser Pro</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="https://cdn-icons-png.freepik.com/256/10253/10253959.png?semt=ais_hybrid" type="image/x-icon">
-  
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content Rewriter Suite - Optimized</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-
   <style>
+    /* ===== VARIABLES & BASE STYLES ===== */
     :root {
       --primary: #2563eb;
       --secondary: #4f46e5;
-      --glass: rgba(255, 255, 255, 0.9);
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      --light-bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       --success: #10b981;
       --error: #ef4444;
       --warning: #f59e0b;
+      --dark: #1e293b;
+      --light: #f8f9fa;
+      --border: #e2e8f0;
     }
-
+    
     * {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-
+    
     body {
-      background: linear-gradient(135deg, #f3f4ff 0%, #e5e7ff 100%);
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
       min-height: 100vh;
-      padding: 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
+      padding: 1rem;
+      color: #333;
     }
-
-    .container {
+    
+    /* ===== TAB NAVIGATION ===== */
+    .tab-container {
       max-width: 1200px;
       width: 100%;
-      margin: 0 auto;
-      background: var(--glass);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
+      margin: 20px auto;
+      background: var(--light-bg);
+      border-radius: 16px;
       box-shadow: var(--shadow);
-      padding: 2.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      animation: fadeIn 0.5s ease-out;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
-
+    
+    .tabs {
+      display: flex;
+      background: var(--dark);
+    }
+    
+    .tab-button {
+      flex: 1;
+      padding: 1rem 0;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-bottom: 3px solid transparent;
+    }
+    
+    .tab-button:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .tab-button.active {
+      color: white;
+      border-bottom: 3px solid var(--primary);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .tab-button i {
+      margin-right: 8px;
+      font-size: 1.1rem;
+    }
+    
+    .tab-content {
+      display: none;
+      padding: 1.5rem;
+    }
+    
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease-out;
+    }
+    
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
-
+    
+    /* ===== HEADER STYLES ===== */
     .header {
       text-align: center;
-      margin-bottom: 2.5rem;
+      margin-bottom: 1.5rem;
     }
-
+    
     .logo {
-      width: 80px;
-      height: 80px;
+      width: 70px;
+      height: 70px;
       background: var(--primary);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 1rem;
-      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+      margin: 0 auto 0.8rem;
+      box-shadow: 0 3px 10px rgba(37, 99, 235, 0.2);
     }
-
+    
     .logo i {
       color: white;
-      font-size: 2.5rem;
+      font-size: 2rem;
     }
-
+    
     h1 {
-        color: #333;
-        margin-bottom: 0.5rem;
+      color: var(--dark);
+      margin-bottom: 0.3rem;
+      font-size: 1.6rem;
     }
-
+    
     p.text-muted {
-        color: #666;
-        font-size: 1rem;
+      color: #666;
+      font-size: 0.95rem;
     }
-
+    
+    /* ===== REWRITE PROMPT GENERATOR STYLES (TAB 1) ===== */
     .input-section {
       position: relative;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
     }
-
+    
     .char-count {
       position: absolute;
-      right: 15px;
-      bottom: 15px;
-      font-size: 0.9rem;
+      right: 12px;
+      bottom: 12px;
+      font-size: 0.85rem;
       color: #666;
       background: rgba(255, 255, 255, 0.8);
       padding: 2px 8px;
       border-radius: 10px;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
     }
     
     .char-count.warning {
-        color: var(--warning);
-        font-weight: 600;
-        background: rgba(255, 237, 213, 0.8);
+      color: var(--warning);
+      font-weight: 600;
+      background: rgba(255, 237, 213, 0.8);
     }
-
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 0.9rem;
+      font-size: 0.95rem;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      transition: all 0.2s ease;
+      background: var(--card-bg);
+    }
+    
+    input[type="text"]:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    }
+    
     textarea {
       width: 100%;
-      min-height: 200px;
-      padding: 1.5rem;
-      border: 2px solid #e0e7ff;
-      border-radius: 15px;
+      min-height: 180px;
+      padding: 1.2rem;
+      border: 2px solid var(--border);
+      border-radius: 12px;
       resize: vertical;
-      transition: all 0.3s ease;
-      background: rgba(255, 255, 255, 0.8);
-      font-size: 1rem;
+      transition: all 0.2s ease;
+      background: var(--card-bg);
+      font-size: 0.95rem;
       color: #333;
+      will-change: transform, opacity; /* Optimasi performa */
     }
-
+    
     textarea::placeholder {
-        color: #999;
+      color: #999;
     }
-
+    
     textarea:focus {
       border-color: var(--primary);
       outline: none;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
     }
-
-    .button-group {
-        display: flex;
-        gap: 1rem;
-        margin-bottom: 2rem;
-    }
-
-    .process-btn, .clear-btn {
-      flex: 1;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .process-btn:hover, .clear-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
-    }
-
-    .clear-btn {
-        background: linear-gradient(135deg, #dc2626, #ef4444);
-    }
-
-    .clear-btn:hover {
-        box-shadow: 0 6px 20px rgba(220, 38, 38, 0.3);
-    }
-
+    
+    /* ===== KOMPAS PARSER PRO STYLES (TAB 2) ===== */
     .grid-container {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-top: 2rem;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
     }
-
+    
     .result-box {
-      background: white;
-      border-radius: 15px;
-      padding: 1.5rem;
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.2rem;
       position: relative;
       box-shadow: var(--shadow);
-      border: 1px solid rgba(255, 255, 255, 0.5);
+      border: 1px solid var(--border);
     }
-
+    
     .result-box h3 {
-        color: #333;
-        margin-top: 0;
-        margin-bottom: 1rem;
-        font-size: 1.3rem;
+      color: #333;
+      margin-top: 0;
+      margin-bottom: 0.8rem;
+      font-size: 1.2rem;
     }
-
+    
     .result-box textarea {
-        min-height: 250px;
-        padding: 1rem;
-        font-size: 0.95rem;
-        border: 1px solid #e0e7ff;
-        background: #fdfefe;
+      min-height: 200px;
+      padding: 1rem;
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
     }
-
-    .copy-btn {
-      padding: 8px 15px;
+    
+    .article-preview {
+      max-height: 250px;
+      overflow-y: auto;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fdfefe;
+      color: #333;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    
+    .article-preview h4 {
+      margin-top: 0;
+      color: var(--primary);
+      font-size: 1.1rem;
+      margin-bottom: 0.7rem;
+    }
+    
+    .article-preview p {
+      margin-bottom: 0.7rem;
+    }
+    
+    /* ===== BUTTONS ===== */
+    .button-group {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .process-btn, .clear-btn, .generate-btn {
+      padding: 0.9rem 1.5rem;
       background: var(--primary);
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
+      font-size: 1rem;
       cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-      font-size: 0.9rem;
+      transition: all 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 5px;
-      flex-shrink: 0; /* Mencegah tombol menyusut */
+      justify-content: center;
+      gap: 8px;
+      will-change: transform; /* Optimasi performa */
     }
-
-    .copy-btn:hover {
+    
+    .process-btn:hover, .clear-btn:hover, .generate-btn:hover {
       transform: translateY(-2px);
       background: var(--secondary);
       box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
     }
-
+    
+    .clear-btn {
+      background: #dc2626;
+    }
+    
+    .clear-btn:hover {
+      background: #ef4444;
+      box-shadow: 0 4px 10px rgba(220, 38, 38, 0.2);
+    }
+    
+    .copy-btn {
+      padding: 7px 12px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      will-change: transform; /* Optimasi performa */
+    }
+    
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      background: var(--secondary);
+      box-shadow: 0 3px 8px rgba(37, 99, 235, 0.15);
+    }
+    
     .result-box .copy-btn {
       position: absolute;
       top: 1rem;
       right: 1rem;
     }
-
-    .article-preview {
-        max-height: 300px;
-        overflow-y: auto;
-        padding: 1rem;
-        border: 1px solid #e0e7ff;
-        border-radius: 10px;
-        background: #fdfefe;
-        color: #333;
-        font-size: 0.95rem;
-        line-height: 1.6;
+    
+    /* ===== INFO BOXES ===== */
+    .info-box {
+      background: #f8f9ff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
     }
-
-    .article-preview h4 {
-        margin-top: 0;
-        color: var(--primary);
-        font-size: 1.2rem;
-        margin-bottom: 0.8rem;
+    
+    .info-box h3 {
+      color: #333;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .article-preview p {
-        margin-bottom: 0.8rem;
+    
+    .step-list {
+      display: grid;
+      gap: 0.8rem;
     }
-
+    
+    .step-item {
+      display: flex;
+      align-items: center;
+      padding: 0.8rem;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    
+    .step-number {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      border-radius: 50%;
+      margin-right: 0.8rem;
+      line-height: 24px;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    
+    .step-item a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.2s ease;
+      font-size: 0.9rem;
+    }
+    
+    .step-item a:hover {
+      color: var(--secondary);
+      text-decoration: underline;
+    }
+    
+    .prompt-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      background: white;
+      padding: 1.2rem;
+      border-radius: 10px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      border: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: #333;
+      overflow-x: auto;
+    }
+    
+    kbd {
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid #cbd5e1;
+      font-size: 0.85em;
+      font-weight: 600;
+      color: #555;
+    }
+    
+    /* ===== LOADING & TOAST ===== */
     .loading {
       display: none;
       position: fixed;
@@ -253,409 +408,474 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(5px);
+      background: rgba(255, 255, 255, 0.9);
       justify-content: center;
       align-items: center;
       z-index: 999;
     }
-
+    
     .loading.active {
       display: flex;
     }
-
+    
     .spinner {
-      width: 50px;
-      height: 50px;
-      border: 5px solid #f3f3f3;
-      border-top: 5px solid var(--primary);
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid var(--primary);
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
-
+    
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
-    .info-box {
-      background: #f8f9ff;
-      border-radius: 15px;
-      padding: 2rem;
-      margin-top: 2rem;
-      border: 1px solid #e0e7ff;
-      box-shadow: var(--shadow);
-    }
-
-    .info-box h3 {
-        color: #333;
-        margin-bottom: 1.5rem;
-    }
-
-    .step-list {
-      display: grid;
-      gap: 1rem;
-    }
-
-    .step-item {
+    
+    .toast {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      background: #333;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      z-index: 1000;
       display: flex;
       align-items: center;
-      padding: 1rem;
-      background: white;
-      border-radius: 10px;
-      border: 1px solid #eee;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      gap: 8px;
+      animation: slideIn 0.3s ease-out, fadeOut 0.5s ease-out 1.5s forwards;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     }
-
-    .step-number {
-      display: inline-block;
-      width: 28px;
-      height: 28px;
-      background: var(--primary);
-      color: white;
-      text-align: center;
-      border-radius: 50%;
-      margin-right: 1rem;
-      line-height: 28px;
-      font-weight: 600;
-    }
-
-    .step-item a {
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: bold;
-        transition: color 0.2s ease;
-    }
-    .step-item a:hover {
-        color: var(--secondary);
-    }
-
-    /* === KODE YANG DIPERBAIKI START === */
-    .prompt-box {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 1.5rem;
-      
-      background: white;
-      padding: 1.5rem;
-      border-radius: 12px;
-      font-family: monospace;
-      white-space: pre-wrap;
-      border: 1px solid #eee;
-      font-size: 0.95rem;
-      color: #333;
-      overflow-x: auto;
-    }
-
-    /* Aturan untuk .prompt-box .copy-btn telah dihapus karena tidak lagi diperlukan */
-    /* === KODE YANG DIPERBAIKI END === */
-
-    kbd {
-      background: #f3f4ff;
-      padding: 2px 6px;
-      border-radius: 4px;
-      border: 1px solid #ddd;
-      font-size: 0.9em;
-      font-weight: 600;
-      color: #555;
-    }
-
-    .toast {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: #333;
-        color: white;
-        padding: 15px 25px;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        animation: slideIn 0.3s ease-out, fadeOut 0.5s ease-out 1.5s forwards;
-    }
-
+    
     .toast.success { background: var(--success); }
     .toast.error { background: var(--error); }
     .toast.info { background: var(--primary); }
-
+    
     .toast i {
-        font-size: 1.2rem;
+      font-size: 1.1rem;
     }
-
+    
     @keyframes slideIn {
-        from { transform: translateX(100%); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
     }
-
+    
     @keyframes fadeOut {
-        from { opacity: 1; }
-        to { opacity: 0; }
+      from { opacity: 1; }
+      to { opacity: 0; }
     }
-
-    @media (max-width: 768px) {
-      .grid-container {
-        grid-template-columns: 1fr;
-      }
-      
+    
+    /* ===== RESPONSIVE ===== */
+    @media (min-width: 768px) {
       body {
-        padding: 1rem;
-        align-items: flex-start;
-      }
-      
-      .container {
         padding: 1.5rem;
       }
-
-      .button-group {
-          flex-direction: column;
+      
+      .tab-container {
+        margin: 30px auto;
+      }
+      
+      .tab-button {
+        padding: 1.2rem 0;
+        font-size: 1.05rem;
+      }
+      
+      .tab-content {
+        padding: 2rem;
+      }
+      
+      .grid-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.8rem;
+      }
+    }
+    
+    @media (min-width: 992px) {
+      .grid-container {
+        gap: 2rem;
       }
     }
   </style>
 </head>
 <body>
-
-<div class="container">
-  <div class="header">
-    <div class="logo">
-      <i class="bi bi-newspaper"></i>
-    </div>
-    <h1>Kompas Parser Pro</h1>
-    <p class="text-muted">Ekstrak konten artikel dengan presisi tinggi</p>
-  </div>
-
-  <div class="input-section">
-    <textarea id="htmlInput" placeholder="Tempel kode HTML artikel Kompas di sini..." spellcheck="false"></textarea>
-    <div class="char-count" id="charCount">0 karakter</div>
-  </div>
-
-  <div class="button-group">
-    <button class="process-btn" onclick="parseHTML()">
-      <i class="bi bi-gear"></i>
-      Proses Artikel
-    </button>
-    <button class="clear-btn" onclick="clearAll()">
-        <i class="bi bi-eraser"></i>
-        Bersihkan Semua
-    </button>
-  </div>
-
-  <div class="grid-container">
-    <div class="result-box">
-      <h3>Hasil Ekstraksi</h3>
-      <textarea id="resultText" readonly></textarea>
-      <button class="copy-btn" onclick="copyText('resultText')">
-        <i class="bi bi-clipboard"></i> Salin
+  <div class="tab-container">
+    <div class="tabs">
+      <button class="tab-button active" data-tab="tab1">
+        <i class="bi bi-pencil-square"></i> Prompt Generator
+      </button>
+      <button class="tab-button" data-tab="tab2">
+        <i class="bi bi-newspaper"></i> Kompas Parser
       </button>
     </div>
     
-    <div class="result-box">
-      <h3>Pratinjau Artikel</h3>
-      <div id="articlePreview" class="article-preview">
-          <p style="text-align: center; color: #999;">Tempel HTML untuk melihat pratinjau</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="info-box">
-    <h3 class="mb-3"><i class="bi bi-tools" style="margin-right: 8px;"></i> Cara Pakai</h3>
-    <div class="step-list">
-      <div class="step-item">
-        <span class="step-number">1</span>
-        Buka artikel <a href="https://tekno.kompas.com" target="_blank">Kompas</a> di tab baru.
+    <!-- Tab 1: Rewrite Prompt Generator -->
+    <div id="tab1" class="tab-content active">
+      <div class="header">
+        <div class="logo">
+          <i class="bi bi-magic"></i>
+        </div>
+        <h1>Rewrite Prompt Generator</h1>
+        <p class="text-muted">Buat prompt untuk menulis ulang konten blog yang SEO-friendly</p>
       </div>
       
-      <div class="step-item">
-        <span class="step-number">2</span>
-        Tekan <kbd>Ctrl</kbd> + <kbd>U</kbd> (Windows/Linux) atau <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>U</kbd> (Mac) untuk lihat source HTML.
+      <div class="input-section">
+        <label for="urlInput">Masukkan URL Artikel Asli:</label>
+        <input type="text" id="urlInput" placeholder="https://contoh.com/artikel">
       </div>
-      <div class="step-item">
-        <span class="step-number">3</span>
-        <kbd>Ctrl</kbd> + <kbd>A</kbd> untuk pilih semua, lalu <kbd>Ctrl</kbd> + <kbd>C</kbd> untuk menyalin.
+      
+      <div class="button-group">
+        <button class="generate-btn" onclick="generatePrompt()">
+          <i class="bi bi-gear"></i>
+          Generate Prompt
+        </button>
+        <button class="clear-btn" onclick="clearTab1()">
+          <i class="bi bi-eraser"></i>
+          Bersihkan
+        </button>
       </div>
-      <div class="step-item">
-        <span class="step-number">4</span>
-        Tempel (<kbd>Ctrl</kbd> + <kbd>V</kbd>) kode HTML ke area input di atas.
+      
+      <div class="result-box">
+        <h3>Prompt yang Dihasilkan</h3>
+        <textarea id="output" readonly placeholder="Prompt akan muncul di sini..."></textarea>
+        <button class="copy-btn" onclick="copyText('output')">
+          <i class="bi bi-clipboard"></i> Salin Prompt
+        </button>
+      </div>
+      
+      <div class="info-box">
+        <h3><i class="bi bi-info-circle"></i> Petunjuk Penggunaan</h3>
+        <div class="step-list">
+          <div class="step-item">
+            <span class="step-number">1</span>
+            Masukkan URL artikel yang ingin Anda tulis ulang
+          </div>
+          <div class="step-item">
+            <span class="step-number">2</span>
+            Klik tombol "Generate Prompt" untuk membuat template prompt
+          </div>
+          <div class="step-item">
+            <span class="step-number">3</span>
+            Salin prompt dan gunakan di platform AI seperti ChatGPT atau Gemini
+          </div>
+          <div class="step-item">
+            <span class="step-number">4</span>
+            Prompt ini dioptimalkan untuk meningkatkan SEO dan engagement pembaca
+          </div>
+        </div>
       </div>
     </div>
-
-    <h3 class="mt-4 mb-3"><i class="bi bi-robot" style="margin-right: 8px;"></i> Prompt untuk AI</h3>
-    <div class="prompt-box">
-      <span id="aiPrompt">
-Tolong parafrase atau tulis ulang artikel ini dengan gaya penulisan yang berbeda agar tidak terlihat hasil copy-paste, tapi tetap mempertahankan seluruh isi dan makna aslinya. Jangan ubah sedikit pun kutipan langsung dari narasumber. Di akhir artikel, cantumkan sumber berita dengan format: (Sumber: tekno.kompas.com).
+    
+    <!-- Tab 2: Kompas Parser Pro -->
+    <div id="tab2" class="tab-content">
+      <div class="header">
+        <div class="logo">
+          <i class="bi bi-file-earmark-break"></i>
+        </div>
+        <h1>Kompas Parser Pro</h1>
+        <p class="text-muted">Ekstrak konten artikel dengan presisi tinggi</p>
+      </div>
+      
+      <div class="input-section">
+        <textarea id="htmlInput" placeholder="Tempel kode HTML artikel Kompas di sini..." spellcheck="false"></textarea>
+        <div class="char-count" id="charCount">0 karakter</div>
+      </div>
+      
+      <div class="button-group">
+        <button class="process-btn" onclick="parseHTML()">
+          <i class="bi bi-gear"></i>
+          Proses Artikel
+        </button>
+        <button class="clear-btn" onclick="clearTab2()">
+          <i class="bi bi-eraser"></i>
+          Bersihkan
+        </button>
+      </div>
+      
+      <div class="grid-container">
+        <div class="result-box">
+          <h3>Hasil Ekstraksi</h3>
+          <textarea id="resultText" readonly></textarea>
+          <button class="copy-btn" onclick="copyText('resultText')">
+            <i class="bi bi-clipboard"></i> Salin
+          </button>
+        </div>
         
-Berikut isi artikelnya:
-      </span>
-      <button class="copy-btn" onclick="copyText('aiPrompt')">
-        <i class="bi bi-clipboard"></i>
-      </button>
-    </div>
-</div>
-</div>
-
-<div class="loading" id="loading">
-  <div class="spinner"></div>
-</div>
-
-<script>
-  // Update karakter input and trigger auto-parse
-  document.getElementById('htmlInput').addEventListener('input', function(e) {
-    const charCountElement = document.getElementById('charCount');
-    const charLength = e.target.value.length;
-    charCountElement.textContent = `${charLength} karakter`;
-
-    if (charLength > 0 && charLength < 50) {
-        charCountElement.classList.add('warning');
-        charCountElement.title = "HTML mungkin terlalu pendek untuk artikel.";
-    } else {
-        charCountElement.classList.remove('warning');
-        charCountElement.title = "";
-    }
-
-    // Debounce for auto-parsing
-    clearTimeout(this.timer);
-    this.timer = setTimeout(() => {
-        if (charLength > 0) {
-            parseHTML();
-        } else {
-            // Clear results if input is empty
-            document.getElementById("resultText").value = "";
-            document.getElementById("articlePreview").innerHTML = '<p style="text-align: center; color: #999;">Tempel HTML untuk melihat pratinjau</p>';
-            // Reset AI Prompt to default without content
-            document.getElementById('aiPrompt').textContent = `Tolong parafrase atau tulis ulang artikel ini dengan gaya penulisan yang berbeda agar tidak terlihat hasil copy-paste, tapi tetap mempertahankan seluruh isi dan makna aslinya. Jangan ubah sedikit pun kutipan langsung dari narasumber. Di akhir artikel, cantumkan sumber berita dengan format: (Sumber: tekno.kompas.com).
-
-Berikut isi artikelnya:
-`;
-        }
-    }, 500); // 500ms debounce
-  });
-
-  async function parseHTML() {
-    const loading = document.getElementById('loading');
-    const rawHTML = document.getElementById("htmlInput").value;
-    
-    if(!rawHTML) {
-      // Clear results if input is empty and parsing is explicitly called without content
-      document.getElementById("resultText").value = "";
-      document.getElementById("articlePreview").innerHTML = '<p style="text-align: center; color: #999;">Tempel HTML untuk melihat pratinjau</p>';
-      document.getElementById('aiPrompt').textContent = `Tolong parafrase atau tulis ulang artikel ini dengan gaya penulisan yang berbeda agar tidak terlihat hasil copy-paste, tapi tetap mempertahankan seluruh isi dan makna aslinya. Jangan ubah sedikit pun kutipan langsung dari narasumber. Di akhir artikel, cantumkan sumber berita dengan format: (Sumber: tekno.kompas.com).
-
-Berikut isi artikelnya:
-`;
-      return;
-    }
-
-    loading.classList.add('active'); // Show spinner immediately
-
-    try {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(rawHTML, "text/html");
-
-      // Ekstraksi konten
-      const title = doc.querySelector("h1")?.innerText || "Judul tidak ditemukan";
-      const contentContainer = doc.querySelector("div.read__content");
+        <div class="result-box">
+          <h3>Pratinjau Artikel</h3>
+          <div id="articlePreview" class="article-preview">
+            <p style="text-align: center; color: #999;">Tempel HTML untuk melihat pratinjau</p>
+          </div>
+        </div>
+      </div>
       
-      let content = "Isi artikel tidak ditemukan atau format tidak sesuai. Pastikan Anda menempelkan HTML dari halaman artikel Kompas yang valid.";
-      if (contentContainer) {
-          const paragraphs = Array.from(contentContainer.querySelectorAll("p"));
-          content = paragraphs
-            .map(p => p.innerText.trim())
-            .filter(text => !/^baca\s*(juga)?:/i.test(text)) // Filter out "Baca Juga" links
-            .filter(text => text.length > 10) // Filter out very short paragraphs
-            .join("\n\n");
-
-          if (content.trim() === "") { // If content is empty after filtering
-              content = "Isi artikel tidak ditemukan setelah pembersihan. Mungkin format HTML tidak standar atau artikel terlalu pendek.";
-          }
-      }
-
-      // Update hasil
-      document.getElementById("resultText").value = `Judul:\n${title}\n\nIsi:\n${content}`;
-      document.getElementById("articlePreview").innerHTML = 
-        `<h4>${title}</h4><p>${content.replace(/\n\n/g, '</p><p>')}</p>`;
-
-      // Update AI Prompt
-      const aiPromptText = `Tolong parafrase atau tulis ulang artikel ini dengan gaya penulisan yang berbeda agar tidak terlihat hasil copy-paste, tapi tetap mempertahankan seluruh isi dan makna aslinya. Jangan ubah sedikit pun kutipan langsung dari narasumber. Di akhir artikel, cantumkan sumber berita dengan format: (Sumber: tekno.kompas.com).
-
+      <div class="info-box">
+        <h3><i class="bi bi-tools"></i> Cara Pakai</h3>
+        <div class="step-list">
+          <div class="step-item">
+            <span class="step-number">1</span>
+            Buka artikel <a href="https://tekno.kompas.com" target="_blank">Kompas</a> di tab baru.
+          </div>
+          
+          <div class="step-item">
+            <span class="step-number">2</span>
+            Tekan <kbd>Ctrl</kbd> + <kbd>U</kbd> (Windows/Linux) atau <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>U</kbd> (Mac) untuk lihat source HTML.
+          </div>
+          <div class="step-item">
+            <span class="step-number">3</span>
+            <kbd>Ctrl</kbd> + <kbd>A</kbd> untuk pilih semua, lalu <kbd>Ctrl</kbd> + <kbd>C</kbd> untuk menyalin.
+          </div>
+          <div class="step-item">
+            <span class="step-number">4</span>
+            Tempel (<kbd>Ctrl</kbd> + <kbd>V</kbd>) kode HTML ke area input di atas.
+          </div>
+        </div>
+        
+        <h3 class="mt-4"><i class="bi bi-robot"></i> Prompt untuk AI</h3>
+        <div class="prompt-box">
+          <span id="aiPrompt">
+Tolong parafrase atau tulis ulang artikel ini dengan gaya penulisan yang berbeda agar tidak terlihat hasil copy-paste, tapi tetap mempertahankan seluruh isi dan makna aslinya. Jangan ubah sedikit pun kutipan langsung dari narasumber. Di akhir artikel, cantumkan sumber berita dengan format: (Sumber: tekno.kompas.com).
+            
 Berikut isi artikelnya:
-
-${content}`;
-
-      document.getElementById('aiPrompt').textContent = aiPromptText;
-
-    } catch (error) {
-      console.error(error);
-      showToast(`❌ Error saat memproses: ${error.message}`, 'error');
-    } finally {
-      loading.classList.remove('active'); // Hide spinner when done
-    }
-  }
-
-  function copyText(elementId) {
-    const element = document.getElementById(elementId);
-    let textToCopy = '';
-
-    const tempTextarea = document.createElement('textarea');
-    tempTextarea.style.position = 'fixed';
-    tempTextarea.style.left = '-9999px';
-    tempTextarea.style.top = '0';
-    tempTextarea.style.opacity = '0';
+          </span>
+          <button class="copy-btn" onclick="copyText('aiPrompt')">
+            <i class="bi bi-clipboard"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+  </div>
+  
+  <script>
+    // ===== TAB NAVIGATION =====
+    document.querySelectorAll('.tab-button').forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all buttons and content
+        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        
+        // Add active class to clicked button
+        button.classList.add('active');
+        
+        // Show corresponding content
+        const tabId = button.getAttribute('data-tab');
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
     
-    if (element.tagName === 'TEXTAREA') {
-        textToCopy = element.value;
-    } else { // It's the prompt span
-        textToCopy = element.textContent;
+    // ===== TOAST FUNCTION =====
+    function showToast(message, type = 'info') {
+      const toast = document.createElement('div');
+      
+      if (type === 'success') toast.innerHTML = '<i class="bi bi-check-circle-fill"></i> ' + message;
+      else if (type === 'error') toast.innerHTML = '<i class="bi bi-x-circle-fill"></i> ' + message;
+      else if (type === 'info') toast.innerHTML = '<i class="bi bi-info-circle-fill"></i> ' + message;
+      
+      toast.classList.add('toast', type);
+      document.body.appendChild(toast);
+      
+      setTimeout(() => toast.remove(), 2500);
     }
-
-    tempTextarea.value = textToCopy;
-    document.body.appendChild(tempTextarea);
-    tempTextarea.focus();
-    tempTextarea.select();
-
-    try {
+    
+    // ===== COPY FUNCTION =====
+    function copyText(elementId) {
+      const element = document.getElementById(elementId);
+      let textToCopy = '';
+      
+      const tempTextarea = document.createElement('textarea');
+      tempTextarea.style.position = 'fixed';
+      tempTextarea.style.left = '-9999px';
+      tempTextarea.style.top = '0';
+      tempTextarea.style.opacity = '0';
+      
+      if (element.tagName === 'TEXTAREA') {
+        textToCopy = element.value;
+      } else { // It's the prompt span
+        textToCopy = element.textContent;
+      }
+      
+      tempTextarea.value = textToCopy;
+      document.body.appendChild(tempTextarea);
+      tempTextarea.focus();
+      tempTextarea.select();
+      
+      try {
         const successful = document.execCommand('copy');
         if (successful) {
-            showToast(`✅ ${elementId === 'resultText' ? 'Hasil' : 'Prompt + artikel'} berhasil disalin!`, 'success');
+          showToast(`✅ ${elementId === 'resultText' ? 'Hasil' : 'Prompt'} berhasil disalin!`, 'success');
         } else {
-            showToast('❌ Gagal menyalin! (Peramban tidak mendukung command "copy")', 'error');
+          showToast('❌ Gagal menyalin! (Peramban tidak mendukung command "copy")', 'error');
         }
-    } catch (err) {
+      } catch (err) {
         showToast('❌ Gagal menyalin! (Error: ' + err.message + ')', 'error');
-    } finally {
+      } finally {
         document.body.removeChild(tempTextarea);
+      }
     }
-  }
+    
+    // ===== TAB 1: REWRITE PROMPT GENERATOR =====
+    function generatePrompt() {
+      const url = document.getElementById("urlInput").value;
+      const output = document.getElementById("output");
+      
+      if (!url) {
+        showToast('❌ Masukkan URL artikel terlebih dahulu!', 'error');
+        return;
+      }
+      
+      const prompt = 
+      `Saya ingin Anda menulis ulang (rewrite) sebuah artikel dari URL berikut: [${url}]. Artikel ini akan saya gunakan sebagai konten blog, jadi mohon ikuti pedoman penulisan berikut agar hasilnya optimal dan mudah diindeks oleh mesin pencari seperti Google.
 
-  function clearAll() {
-    document.getElementById('htmlInput').value = '';
-    document.getElementById('resultText').value = '';
-    document.getElementById('articlePreview').innerHTML = '<p style="text-align: center; color: #999;">Tempel HTML untuk melihat pratinjau</p>';
-    document.getElementById('charCount').textContent = '0 karakter';
-    document.getElementById('charCount').classList.remove('warning');
-    document.getElementById('charCount').title = "";
-    document.getElementById('aiPrompt').textContent = `Tolong parafrase atau tulis ulang artikel ini dengan gaya penulisan yang berbeda agar tidak terlihat hasil copy-paste, tapi tetap mempertahankan seluruh isi dan makna aslinya. Jangan ubah sedikit pun kutipan langsung dari narasumber. Di akhir artikel, cantumkan sumber berita dengan format: (Sumber: tekno.kompas.com).
+📝 Aturan Penulisan:
+Gaya Bahasa: Gunakan gaya semi-formal yang santai namun tetap informatif. Cocok untuk pembaca umum dan mudah dicerna.
 
+Fakta & Kutipan:
+
+Semua fakta, data, dan makna asli dari artikel harus dipertahankan.
+
+Kutipan langsung dari narasumber tidak boleh diubah, baik secara kata maupun konteks.
+
+Judul:
+Buatkan beberapa versi judul menarik dan clickable, yang cocok untuk SEO dan mampu memancing rasa penasaran pembaca.
+
+Label:
+Berikan beberapa saran label/kategori yang relevan untuk Blogger (misalnya: Teknologi, Tips Bisnis, Gaya Hidup, Pendidikan, dll).
+
+Penutup:
+Cantumkan sumber artikel asli di bagian akhir tulisan dengan format berikut:
+(Sumber: NamaSitus.com)
+
+📈 Tujuan:
+Meningkatkan peluang artikel direkomendasikan oleh Google Discover dan mesin pencari lainnya.
+
+Meningkatkan waktu kunjungan dan engagement pembaca di blog.`;
+      
+      output.value = prompt;
+      showToast('✅ Prompt berhasil dibuat!', 'success');
+    }
+    
+    function clearTab1() {
+      document.getElementById('urlInput').value = '';
+      document.getElementById('output').value = '';
+      showToast('✨ Tab Prompt Generator telah dibersihkan!', 'info');
+    }
+    
+    // ===== TAB 2: KOMPAS PARSER PRO =====
+    // Update karakter input and trigger auto-parse
+    document.getElementById('htmlInput').addEventListener('input', function(e) {
+      const charCountElement = document.getElementById('charCount');
+      const charLength = e.target.value.length;
+      charCountElement.textContent = `${charLength} karakter`;
+      
+      if (charLength > 0 && charLength < 50) {
+        charCountElement.classList.add('warning');
+        charCountElement.title = "HTML mungkin terlalu pendek untuk artikel.";
+      } else {
+        charCountElement.classList.remove('warning');
+        charCountElement.title = "";
+      }
+      
+      // Debounce for auto-parsing
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        if (charLength > 0) {
+          parseHTML();
+        } else {
+          // Clear results if input is empty
+          document.getElementById("resultText").value = "";
+          document.getElementById("articlePreview").innerHTML = '<p style="text-align: center; color: #999;">Tempel HTML untuk melihat pratinjau</p>';
+          // Reset AI Prompt to default without content
+          document.getElementById('aiPrompt').textContent = `Tolong parafrase atau tulis ulang artikel ini dengan gaya penulisan yang berbeda agar tidak terlihat hasil copy-paste, tapi tetap mempertahankan seluruh isi dan makna aslinya. Jangan ubah sedikit pun kutipan langsung dari narasumber. Di akhir artikel, cantumkan sumber berita dengan format: (Sumber: tekno.kompas.com).
+          
 Berikut isi artikelnya:
 `;
-    showToast('✨ Semua bidang telah dibersihkan!', 'info');
-  }
-
-  function showToast(message, type = 'info') {
-    const toast = document.createElement('div');
-    toast.textContent = message;
-    toast.classList.add('toast', type);
+        }
+      }, 500); // 500ms debounce
+    });
     
-    if (type === 'success') toast.innerHTML = '<i class="bi bi-check-circle-fill"></i> ' + message;
-    else if (type === 'error') toast.innerHTML = '<i class="bi bi-x-circle-fill"></i> ' + message;
-    else if (type === 'info') toast.innerHTML = '<i class="bi bi-info-circle-fill"></i> ' + message;
-
-    document.body.appendChild(toast);
-
-    setTimeout(() => toast.remove(), 2500);
-  }
-</script>
-
+    async function parseHTML() {
+      const loading = document.getElementById('loading');
+      const rawHTML = document.getElementById("htmlInput").value;
+      
+      if(!rawHTML) {
+        // Clear results if input is empty and parsing is explicitly called without content
+        document.getElementById("resultText").value = "";
+        document.getElementById("articlePreview").innerHTML = '<p style="text-align: center; color: #999;">Tempel HTML untuk melihat pratinjau</p>';
+        document.getElementById('aiPrompt').textContent = `Tolong parafrase atau tulis ulang artikel ini dengan gaya penulisan yang berbeda agar tidak terlihat hasil copy-paste, tapi tetap mempertahankan seluruh isi dan makna aslinya. Jangan ubah sedikit pun kutipan langsung dari narasumber. Di akhir artikel, cantumkan sumber berita dengan format: (Sumber: tekno.kompas.com).
+        
+Berikut isi artikelnya:
+`;
+        return;
+      }
+      
+      loading.classList.add('active'); // Show spinner immediately
+      
+      // Simulate processing delay
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      try {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(rawHTML, "text/html");
+        
+        // Ekstraksi konten
+        const title = doc.querySelector("h1")?.innerText || "Judul tidak ditemukan";
+        const contentContainer = doc.querySelector("div.read__content");
+        
+        let content = "Isi artikel tidak ditemukan atau format tidak sesuai. Pastikan Anda menempelkan HTML dari halaman artikel Kompas yang valid.";
+        if (contentContainer) {
+          const paragraphs = Array.from(contentContainer.querySelectorAll("p"));
+          content = paragraphs
+          .map(p => p.innerText.trim())
+          .filter(text => !/^baca\s*(juga)?:/i.test(text)) // Filter out "Baca Juga" links
+          .filter(text => text.length > 10) // Filter out very short paragraphs
+          .join("\n\n");
+          
+          if (content.trim() === "") { // If content is empty after filtering
+            content = "Isi artikel tidak ditemukan setelah pembersihan. Mungkin format HTML tidak standar atau artikel terlalu pendek.";
+          }
+        }
+        
+        // Update hasil
+        document.getElementById("resultText").value = `Judul:\n${title}\n\nIsi:\n${content}`;
+        document.getElementById("articlePreview").innerHTML = 
+          `<h4>${title}</h4><p>${content.replace(/\n\n/g, '</p><p>')}</p>`;
+        
+        // Update AI Prompt
+        const aiPromptText = `Tolong parafrase atau tulis ulang artikel ini dengan gaya penulisan yang berbeda agar tidak terlihat hasil copy-paste, tapi tetap mempertahankan seluruh isi dan makna aslinya. Jangan ubah sedikit pun kutipan langsung dari narasumber. Di akhir artikel, cantumkan sumber berita dengan format: (Sumber: tekno.kompas.com).
+        
+Berikut isi artikelnya:
+        
+${content}`;
+        
+        document.getElementById('aiPrompt').textContent = aiPromptText;
+        
+        showToast('✅ Artikel berhasil diproses!', 'success');
+        
+      } catch (error) {
+        console.error(error);
+        showToast(`❌ Error saat memproses: ${error.message}`, 'error');
+      } finally {
+        loading.classList.remove('active'); // Hide spinner when done
+      }
+    }
+    
+    function clearTab2() {
+      document.getElementById('htmlInput').value = '';
+      document.getElementById('resultText').value = '';
+      document.getElementById('articlePreview').innerHTML = '<p style="text-align: center; color: #999;">Tempel HTML untuk melihat pratinjau</p>';
+      document.getElementById('charCount').textContent = '0 karakter';
+      document.getElementById('charCount').classList.remove('warning');
+      document.getElementById('charCount').title = "";
+      document.getElementById('aiPrompt').textContent = `Tolong parafrase atau tulis ulang artikel ini dengan gaya penulisan yang berbeda agar tidak terlihat hasil copy-paste, tapi tetap mempertahankan seluruh isi dan makna aslinya. Jangan ubah sedikit pun kutipan langsung dari narasumber. Di akhir artikel, cantumkan sumber berita dengan format: (Sumber: tekno.kompas.com).
+      
+Berikut isi artikelnya:
+`;
+      showToast('✨ Tab Kompas Parser telah dibersihkan!', 'info');
+    }
+  </script>
 </body>
 </html>
