@@ -728,37 +728,38 @@ Berikut isi artikelnya:
       }
       
       const prompt = 
-      `Saya ingin Anda menulis ulang (rewrite) sebuah artikel dari URL berikut: [${url}]. Artikel ini akan saya gunakan sebagai konten blog, jadi mohon ikuti pedoman penulisan berikut agar hasilnya optimal dan mudah diindeks oleh mesin pencari seperti Google.
+`Saya ingin Anda menulis ulang (rewrite) 100% isi artikel dari URL berikut ini:
+${url}
 
-📝 Aturan Penulisan:
-Gaya Bahasa: Gunakan gaya semi-formal yang santai namun tetap informatif. Cocok untuk pembaca umum dan mudah dicerna.
+Jika artikel tidak dapat diakses atau link error, cukup beri informasi bahwa link tidak dapat diakses, tanpa memberikan saran apa pun.
+
+Pedoman Penulisan
+Gaya Bahasa:
+Gunakan gaya semi-formal yang santai namun tetap informatif. Cocok untuk pembaca umum dan mudah dipahami.
 
 Fakta & Kutipan:
-
-Semua fakta, data, dan makna asli dari artikel harus dipertahankan.
-
-Kutipan langsung dari narasumber tidak boleh diubah, baik secara kata maupun konteks.
+- Ambil 100% konten dari artikel tersebut.
+- Jangan ubah kutipan langsung dari narasumber, baik secara kata maupun konteks.
+- Tidak perlu tambahkan saran atau kutipan buatan sendiri.
 
 Judul:
-Buatkan beberapa versi judul menarik dan clickable, yang cocok untuk SEO dan mampu memancing rasa penasaran pembaca.
+- Buatkan beberapa versi judul yang menarik, clickable, dan SEO-friendly. Judul harus memancing rasa penasaran pembaca.
 
-Label:
-Berikan beberapa saran label/kategori yang relevan untuk Blogger.
+Label (Kategori Blogger):
+Berikan saran label yang relevan dari daftar di bawah ini. Jika ada label yang lebih cocok, tambahkan saja.
+AI, Anime, Apple, Berita, Berita Nasional, Film, Flora & Fauna, Gadget, Game, Hoax, Internet, Kebijakan Pemerintah, Live Action, Olahraga, One Piece, Kriminal, Pemerintah, Korea, Penipuan, Politik, Processor, Religi, Samsung, Software, Komputer, Teknologi, Tips, iQOO, Tutorial
+(Pisahkan dengan koma)
 
-label yang sudah ada, kamu perlu saranin yg mana yg cocok, jika ada yg lebih cocok dari daftar boleh saranin yang lain
+Penutup Artikel:
+Cantumkan sumber asli artikel di bagian akhir dengan format:
+(Sumber: MSN.com)
 
-(AI,Anime,Apple,Berita,Berita Nasional,Film,Flora & Fauna,Gadget,Game,Hiburan,Hoax,Internet,Kebijakan Pemerintah,Live Action,Olahraga,One Piece,Kriminal,Pemerintah,Korea,Penipuan,Politik,Processor,Religi,Samsung,Software,Komputer,Teknologi,Tips,iQOO,Tutorial,)
+Tujuan:
+- Meningkatkan peluang artikel direkomendasikan di Google Discover dan mesin pencari lainnya
+- Meningkatkan waktu kunjungan serta keterlibatan pembaca di blog
 
-sarannya pisahkan dengan koma
-
-Penutup:
-Cantumkan sumber artikel asli di bagian akhir tulisan dengan format berikut:
-(Sumber: NamaSitus.com)
-
-📈 Tujuan:
-Meningkatkan peluang artikel direkomendasikan oleh Google Discover dan mesin pencari lainnya.
-
-Meningkatkan waktu kunjungan dan engagement pembaca di blog.`;
+Catatan Penting:
+Hasil akhir harus sudah siap copy-paste untuk dipublikasikan. Tidak perlu diedit sama sekali.`;
       
       output.value = prompt;
       showToast('✅ Prompt berhasil dibuat!', 'success');
